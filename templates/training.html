@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Training at IRONHUB{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <p class="eyebrow">Programming</p>
+  <h1>Train with a plan, not a guess</h1>
+  <p class="lead">
+    Open gym all day. Coached blocks in the morning and evening so Sivagangai members
+    can progress without wandering between machines.
+  </p>
+</section>
+
+<section class="section">
+  <div class="card-grid three">
+    <article class="card">
+      <h3>Bodybuilding</h3>
+      <p>Hypertrophy splits, pose-ready shoulders, and volume that actually recovers.</p>
+    </article>
+    <article class="card">
+      <h3>Power & strength</h3>
+      <p>Squat, bench, deadlift cycles with spotters and progressive loading.</p>
+    </article>
+    <article class="card">
+      <h3>Fat-loss HIIT</h3>
+      <p>Conditioning that respects your joints — no random burpee punishment.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="section-head">
+    <h2>Class board</h2>
+  </div>
+  <div class="class-list">
+    {% for item in classes %}
+    <article class="class-row">
+      <time>{{ item.time }}</time>
+      <div>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.blurb }}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

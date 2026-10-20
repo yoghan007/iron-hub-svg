@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IRONHUB CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header admin-header">
+      <a class="brand" href="{{ url_for('admin_cms') }}">
+        <span class="brand-mark">IH</span>
+        <span>
+          <strong>IRONHUB CMS</strong>
+          <small>Signed in as {{ admin_user }}</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="{{ url_for('home') }}" target="_blank" rel="noreferrer">View site</a>
+      </nav>
+      <form method="post" action="{{ url_for('admin_logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button class="btn btn-ghost" type="submit">Sign out</button>
+      </form>
+    </header>
+
+    <main class="section admin-main">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <div class="section-head">
+        <h1>Content manager</h1>
+        <p>Update public gym details and review membership enquiries.</p>
+      </div>
+
+      <div class="split form-split">
+        <form class="enquiry" method="post">
+          <h2>Website content</h2>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          {% for key, label in setting_fields %}
+            <label>
+              {{ label }}
+              {% if key in ['gym_address', 'tagline'] %}
+                <textarea name="{{ key }}" rows="3" required>{{ settings[key] }}</textarea>
+              {% else %}
+                <input type="text" name="{{ key }}" value="{{ settings[key] }}" required />
+              {% endif %}
+            </label>
+          {% endfor %}
+          <button class="btn btn-accent" type="submit">Save changes</button>
+        </form>
+
+        <section>
+          <h2>Enquiries ({{ enquiries|length }})</h2>
+          {% if enquiries %}
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>When</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Plan</th>
+                    <th>Slot</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in enquiries %}
+                    <tr>
+                      <td>{{ item.created_at }}</td>
+                      <td>{{ item.full_name }}</td>
+                      <td>{{ item.phone }}</td>
+                      <td>{{ item.plan }}</td>
+                      <td>{{ item.preferred_slot }}</td>
+                      <td>{{ item.message or "—" }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p>No enquiries yet.</p>
+          {% endif %}
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

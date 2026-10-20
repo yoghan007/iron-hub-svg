@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}IRONHUB Sivagangai | Strength Gym{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Sivagangai · Strength · Discipline</p>
+    <h1>Forge your body at <span>IRONHUB</span></h1>
+    <p class="lead">
+      A no-nonsense gym for Sivagangai — free weights, coaching, and a floor that stays busy
+      from sunrise sessions to night lifts.
+    </p>
+    <p class="tamil">உங்கள் வலிமை இங்கே தொடங்குகிறது.</p>
+    <div class="hero-actions">
+      <a class="btn btn-accent" href="{{ url_for('contact') }}">Start a membership</a>
+      <a class="btn btn-ghost" href="{{ url_for('training') }}">See training</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="stat"><strong>5:30 AM</strong><span>Doors open</span></div>
+    <div class="stat"><strong>4</strong><span>Daily class blocks</span></div>
+    <div class="stat"><strong>PT</strong><span>Coaches on floor</span></div>
+  </div>
+</section>
+
+<section class="strip">
+  <p>Power racks · Olympic plates · Cardio zone · Steam-ready recovery corner</p>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Why Sivagangai trains here</h2>
+    <p>Local gym. Serious equipment. Clear plans. No gimmicks.</p>
+  </div>
+  <div class="card-grid">
+    <article class="card">
+      <h3>Heavy iron</h3>
+      <p>Enough plates, benches, and racks so you do not wait through your working sets.</p>
+    </article>
+    <article class="card">
+      <h3>Coached form</h3>
+      <p>Trainers who correct your squat, deadlift, and press before ego takes over.</p>
+    </article>
+    <article class="card">
+      <h3>City-centre hours</h3>
+      <p>Open early for office-goers and students, late for night-shift grinders.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="section-head">
+    <h2>Today’s class rhythm</h2>
+    <p>Walk in for open gym, or lock a slot in a coached session.</p>
+  </div>
+  <div class="class-list">
+    {% for item in classes %}
+    <article class="class-row">
+      <time>{{ item.time }}</time>
+      <div>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.blurb }}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="cta-band">
+  <div>
+    <h2>First week from ₹299</h2>
+    <p>Try the floor, meet a coach, and decide if IRONHUB is your home gym.</p>
+  </div>
+  <a class="btn btn-dark" href="{{ url_for('contact', plan='trial') }}">Book a 7-day trial</a>
+</section>
+{% endblock %}

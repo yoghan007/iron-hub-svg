@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IRONHUB Admin Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body class="admin-login-body">
+    <div class="noise"></div>
+    <main class="login-wrap">
+      <form class="enquiry login-card" method="post">
+        <p class="eyebrow">Staff only</p>
+        <h1>IRONHUB CMS</h1>
+        <p>Sign in to manage Sivagangai gym content and membership enquiries.</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+              {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <label>
+          Username
+          <input type="text" name="username" autocomplete="username" required />
+        </label>
+        <label>
+          Password
+          <input type="password" name="password" autocomplete="current-password" required />
+        </label>
+        <button class="btn btn-accent" type="submit">Sign in</button>
+        <a class="back-link" href="{{ url_for('home') }}">← Back to website</a>
+      </form>
+    </main>
+  </body>
+</html>
